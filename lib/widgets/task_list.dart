@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab1/model/task_handler.dart';
+import 'package:lab1/widgets/status_icon.dart';
 import 'package:provider/provider.dart';
 
 class TaskList extends StatelessWidget {
@@ -11,9 +12,12 @@ class TaskList extends StatelessWidget {
         var taskHandler = context.watch<TaskHandler>();
         var tasks = taskHandler.testTasks();
 
-   return ListView(children: [
-      for (final task in tasks) ListTile(title: Text(task.title)),
-   ]);
+    return ListView(children: [
+   for (final task in tasks) 
+      ListTile(
+         leading: StatusIcon(task),
+         title: Text(task.title)),
+ ]);
  }
-    
+
 }
