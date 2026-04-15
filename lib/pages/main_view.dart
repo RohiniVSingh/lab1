@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lab1/model/types.dart';
 import 'package:lab1/model/task_handler.dart';
+import 'package:lab1/model/types.dart';
+import 'package:lab1/pages/add_view.dart';
 import 'package:lab1/widgets/task_list.dart';
-import 'package:lab1/views/add_view.dart';
 import 'package:provider/provider.dart';
 
 class MainView extends StatelessWidget {
@@ -16,7 +16,7 @@ class MainView extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: _actions(context),
       ),
-      body: TaskList(),
+      body: const TaskList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

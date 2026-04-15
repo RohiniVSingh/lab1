@@ -14,12 +14,12 @@ class _AddViewState extends State<AddView> {
 
   @override
   Widget build(BuildContext context) {
-    var taskHandler = Provider.of<TaskHandler>(context, listen: false);
+    final taskHandler = Provider.of<TaskHandler>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add todo'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('ADD VIEW TEST 123'),
+        backgroundColor: Colors.red,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,7 +34,9 @@ class _AddViewState extends State<AddView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          print('before addTask');
           taskHandler.addTask(taskTitle);
+          print('after addTask');
           Navigator.pop(context);
         },
         tooltip: 'Done',

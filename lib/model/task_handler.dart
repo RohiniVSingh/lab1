@@ -1,11 +1,12 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lab1/model/task.dart';
 import 'package:lab1/model/types.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskHandler extends ChangeNotifier {
+  static const _tasksKey = 'tasksKey';
+
   TaskHandler() {
     _readTasks();
   }
@@ -87,35 +88,26 @@ class TaskHandler extends ChangeNotifier {
     writeTasks();
   }
 
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/tasks.json');
-  }
-
   void _readTasks() async {
-    try {
-      final file = await _localFile;
-      // Read the file
-      String contents = await file.readAsString();
-      List<dynamic> jsonData = jsonDecode(contents);
+    // Obtain shared preferences used to store the tasks.
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
+    String? storedTasks = sharedPrefs.getString(_tasksKey);
+    if (storedTasks != null) {
+      List<dynamic> jsonData = jsonDecode(storedTasks);
       _tasks.addAll(jsonData.map((item) => Task.fromJson(item)).toList());
-      notifyListeners();
-    } catch (e) {
-      // If encountering an error, return an empty list
+    } else {
       _tasks.clear();
-      notifyListeners();
     }
+    notifyListeners();
   }
 
-  Future<File> writeTasks() async {
-    final file = await _localFile;
-    // Convert tasks to json and write to file
+  void writeTasks() async {
+    // Obtain shared preferences used to store the tasks.
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
+    // Convert tasks to json and store in shared preferences
     String json = jsonEncode(_tasks.map((task) => task.toJson()).toList());
-    return file.writeAsString(json);
+    await sharedPrefs.setString(_tasksKey, json);
   }
 }
