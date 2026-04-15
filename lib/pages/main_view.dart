@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab1/model/task_handler.dart';
 import 'package:lab1/model/types.dart';
+import 'package:lab1/model/task_handler.dart';
 import 'package:lab1/widgets/task_list.dart';
 import 'package:lab1/views/add_view.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ class MainView extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddView(),
+              builder: (context) => const AddView(),
             ),
           );
         },
@@ -32,11 +32,11 @@ class MainView extends StatelessWidget {
     );
   }
 
-  List<Widget> _actions(context) {
+  List<Widget> _actions(BuildContext context) {
     return [_filterMenu(context)];
   }
 
-  Widget _filterMenu(context) {
+  Widget _filterMenu(BuildContext context) {
     var taskHandler = Provider.of<TaskHandler>(context, listen: false);
 
     return PopupMenuButton<FilterType>(
