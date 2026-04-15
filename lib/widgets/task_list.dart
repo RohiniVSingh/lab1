@@ -10,7 +10,7 @@ class TaskList extends StatelessWidget {
       Widget build(BuildContext context) {
 
         var taskHandler = context.watch<TaskHandler>();
-        var tasks = taskHandler.testTasks();
+        var tasks = taskHandler.activeTasks; 
 
     return ListView(children: [
    for (final task in tasks) 
